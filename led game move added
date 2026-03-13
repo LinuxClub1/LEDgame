@@ -1,0 +1,81 @@
+#include <IRremote.h>
+const int RECV_PIN = 2;
+#define up 0X20DFA25D
+#define down 0X20DF629D
+#define left 0X20DFE21D
+#define right 0X20DF12ED
+IRrecv irrecv(RECV_PIN);
+int x=0;
+int y=0;
+int ysize=3;
+int xsize=4;
+struct led{
+  int pin;
+  int value;
+};
+led field [4] [3];
+void UP()
+{
+if(y<ysize)
+{
+y++;
+}
+}
+void LEFT()
+{
+if(x<xsize)
+{
+x++;
+}
+}
+void DOWN()
+{
+if(y<ysize)
+{
+y--;
+}
+}
+void RIGHT()
+{
+if(x<xsize)
+{
+x--;
+}
+}
+void setup() 
+{
+irrecv.enableIRIn();
+irrecv.blink13(true);
+field [0][0].pin=5;
+field [1][0].pin=3;
+field [2][0].pin=4;
+field [3][0].pin=1;
+field [0][1].pin=6;
+field [1][1].pin=11;
+field [2][1].pin=12;
+field [3][1].pin=9;
+field [0][2].pin=7;
+field [1][2].pin=10;
+field [2][2].pin=8;
+field [3][2].pin=13;
+for(int index=0; index<4;index++){
+for(int index2=0; index2<3;index2++)
+  {
+    pinMode(field[index][index2].pin,OUTPUT);
+    field[index][index2].value=LOW;
+    digitalWrite (field [index][index2].pin, field[index][index2].value);
+  }
+  }
+field[0][0].value=HIGH;
+    digitalWrite (field [0][0].pin, field[0][0].value);
+
+
+
+  
+}
+
+void loop() {
+for(int index=0; index<4;index++){
+for(int index2=0; index2<3;index2++){
+digitalWrite (field [index][index2].pin, field[index][index2].value);
+}}}
